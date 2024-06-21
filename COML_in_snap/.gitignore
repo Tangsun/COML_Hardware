@@ -9,4 +9,4 @@ devel/
 **.pyc
 *.db
 
-outer_loop_python/rosbags/
+src/outer_loop_python/rosbags/
