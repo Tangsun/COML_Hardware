@@ -1,0 +1,12 @@
+\subsubsection usage Usage
+\verbatim
+<node name="outer_loop_node" pkg="outer_loop" type="outer_loop_node">
+  <param name="Kp_xy" type="double" value="1.0" />
+  <param name="Ki_xy" type="double" value="0.0" />
+  <param name="Kd_xy" type="double" value="0.0" />
+  <param name="Kp_z" type="double" value="1.0" />
+  <param name="Ki_z" type="double" value="0.0" />
+  <param name="Kd_z" type="double" value="0.0" />
+</node>
+\endverbatim
+

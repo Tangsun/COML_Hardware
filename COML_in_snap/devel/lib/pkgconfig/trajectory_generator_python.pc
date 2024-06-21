@@ -1,0 +1,1 @@
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/trajectory_generator_python/lib/pkgconfig/trajectory_generator_python.pc

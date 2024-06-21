@@ -1,0 +1,10 @@
+(cl:defpackage behavior_selector-srv
+  (:use )
+  (:export
+   "MISSIONMODECHANGE"
+   "<MISSIONMODECHANGE-REQUEST>"
+   "MISSIONMODECHANGE-REQUEST"
+   "<MISSIONMODECHANGE-RESPONSE>"
+   "MISSIONMODECHANGE-RESPONSE"
+  ))
+

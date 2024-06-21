@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,libadaptnotch.so -o libadaptnotch.so CMakeFiles/adaptnotch.dir/src/adaptnotch.cpp.o 

@@ -1,0 +1,7 @@
+set(trajectory_generator_python_SETUP_PY_SETUP_MODULE "distutils.core")
+set(trajectory_generator_python_SETUP_PY_VERSION "0.1.0")
+set(trajectory_generator_python_SETUP_PY_SCRIPTS "")
+set(trajectory_generator_python_SETUP_PY_PACKAGES "trajectory_generator_python")
+set(trajectory_generator_python_SETUP_PY_PACKAGE_DIRS "src/trajectory_generator_python")
+set(trajectory_generator_python_SETUP_PY_MODULES "")
+set(trajectory_generator_python_SETUP_PY_MODULE_DIRS "")

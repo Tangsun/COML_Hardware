@@ -1,0 +1,6 @@
+comm_monitor
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/comm_monitor/cmake.lock /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/./cmake.lock
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/comm_monitor/share/comm_monitor/cmake/comm_monitorConfig-version.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/comm_monitor/cmake/comm_monitorConfig-version.cmake
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/comm_monitor/share/comm_monitor/cmake/comm_monitorConfig.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/comm_monitor/cmake/comm_monitorConfig.cmake
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/comm_monitor/lib/comm_monitor/comm_monitor /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/comm_monitor/comm_monitor
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/comm_monitor/lib/pkgconfig/comm_monitor.pc /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/pkgconfig/comm_monitor.pc

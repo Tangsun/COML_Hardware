@@ -1,0 +1,8 @@
+prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/install
+
+Name: acl_joy
+Description: Description of acl_joy
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

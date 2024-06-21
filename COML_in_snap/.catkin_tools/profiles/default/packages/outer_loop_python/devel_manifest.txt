@@ -1,0 +1,6 @@
+outer_loop_python
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop_python/cmake.lock /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/./cmake.lock
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop_python/share/outer_loop_python/cmake/outer_loop_pythonConfig-version.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/outer_loop_python/cmake/outer_loop_pythonConfig-version.cmake
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop_python/share/outer_loop_python/cmake/outer_loop_pythonConfig.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/outer_loop_python/cmake/outer_loop_pythonConfig.cmake
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop_python/lib/python3/dist-packages/outer_loop_python/__init__.py /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/python3/dist-packages/outer_loop_python/__init__.py
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop_python/lib/pkgconfig/outer_loop_python.pc /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/pkgconfig/outer_loop_python.pc

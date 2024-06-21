@@ -1,0 +1,1 @@
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/comm_monitor/lib/pkgconfig/comm_monitor.pc

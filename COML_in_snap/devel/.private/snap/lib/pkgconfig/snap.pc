@@ -1,0 +1,8 @@
+prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap
+
+Name: snap
+Description: Description of snap
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

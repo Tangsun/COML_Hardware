@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>trajectory_generator_python</name>
+  <version>0.1.0</version>
+  <description>Trajectory generator for ACL's snap stack</description>
+  <maintainer email="aleix@mit.edu">Aleix Paris</maintainer>
+  <license>MIT</license>
+  <url type="website">https://gitlab.com/mit-acl/fsw/trajectory_generator</url>
+  <author email="aleix@mit.edu">Aleix Paris</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>eigen</depend>
+  <!--<depend>boost</depend>-->
+  <depend>roscpp</depend>
+  <depend>snapstack_msgs</depend>
+  <depend>geometry_msgs</depend>
+</package>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>comm_monitor</name>
+  <version>0.0.0</version>
+  <description>Package for measuring communication latency from base station</description>
+
+  <maintainer email="mfe@mit.edu">Michael Everett</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>snapstack_msgs</depend>
+
+</package>

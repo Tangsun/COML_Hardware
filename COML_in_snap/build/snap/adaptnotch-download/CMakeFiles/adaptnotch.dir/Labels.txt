@@ -1,0 +1,14 @@
+# Target labels
+ adaptnotch
+# Source files and their labels
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/CMakeFiles/adaptnotch
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/CMakeFiles/adaptnotch.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/CMakeFiles/adaptnotch-complete.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-install.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-mkdir.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-download.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-update.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-patch.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-configure.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-build.rule
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/adaptnotch-prefix/src/adaptnotch-stamp/adaptnotch-test.rule

@@ -1,0 +1,8 @@
+prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim
+
+Name: snap_sim
+Description: Description of snap_sim
+Version: 0.0.0
+Cflags: -I/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src/snap_sim/include/shims -I/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src/snap_sim/include/wind-dynamics
+Libs: -L${prefix}/lib -lesc_interface -lsensor_imu
+Requires: 

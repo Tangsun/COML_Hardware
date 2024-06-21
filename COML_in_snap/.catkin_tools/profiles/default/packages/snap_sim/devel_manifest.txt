@@ -1,0 +1,8 @@
+snap_sim
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/cmake.lock /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/./cmake.lock
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/share/snap_sim/cmake/snap_simConfig-version.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/snap_sim/cmake/snap_simConfig-version.cmake
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/share/snap_sim/cmake/snap_simConfig.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/snap_sim/cmake/snap_simConfig.cmake
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/lib/libesc_interface.so /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/libesc_interface.so
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/lib/libsensor_imu.so /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/libsensor_imu.so
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/lib/snap_sim/snap_sim /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/snap_sim/snap_sim
+/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/lib/pkgconfig/snap_sim.pc /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/pkgconfig/snap_sim.pc
