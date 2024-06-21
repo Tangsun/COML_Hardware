@@ -1,0 +1,15 @@
+<launch>
+  <arg name="veh" default="$(optenv VEHTYPE SQ)" />
+  <arg name="num" default="$(optenv VEHNUM 01)" />
+  <!-- <arg name="sim" default="$(optenv SIMBOOL s)" /> -->
+
+  <group ns="$(arg veh)$(arg num)">
+    <!-- Position / trajectory tracking -->
+    <node name="cntrl" pkg="outer_loop_python" type="outer_loop_ros.py" output="screen"> 	
+      <!-- Load vehicle type parameters -->
+      <rosparam file="$(find outer_loop_python)/param/$(arg veh).yaml" command="load"/>
+    </node>
+
+  </group>
+
+</launch>

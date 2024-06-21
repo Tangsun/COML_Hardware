@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="veh" default="$(optenv VEHTYPE SQ)" />
+  <arg name="num" default="$(optenv VEHNUM 01)" />
+
+  <group ns="$(arg veh)$(arg num)">
+    <node name="esc" pkg="snap" type="esc_interface" output="screen" />
+  </group>
+
+</launch>

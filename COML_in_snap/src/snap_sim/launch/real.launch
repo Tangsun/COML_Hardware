@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="veh" default="HX"/>
+  <arg name="num" default="14"/>
+  <arg name="room" default="vicon" />
+
+  <arg name="rviz" default="true" /> <!-- show rviz? -->
+  <arg name="key" default="false" /> <!-- use acl_joy/vimfly? -->
+  <arg name="behavior_gui" default="true" /> <!-- use acl_joy/vimfly? -->
+
+  <!-- Init position-->
+  <!-- <arg name="x" default="0" /> 
+  <arg name="y" default="0" />
+  <arg name="z" default="0" /> -->
+  
+  <!-- Init attitude quaternion (maps vector in B to I)-->
+  <!-- <arg name="q_x" default="0.0" />
+  <arg name="q_y" default="0.0" />
+  <arg name="q_z" default="0.0" />
+  <arg name="q_w" default="1.0" /> -->
+
+  <!-- wind params -->
+  <!-- <arg name="wx_nominal" default="0.0" />
+  <arg name="wy_nominal" default="0.0" />
+  <arg name="wz_nominal" default="0.0" />
+  <arg name="wx_gust_bound" default="0.0" />
+  <arg name="wy_gust_bound" default="0.0" />
+  <arg name="wz_gust_bound" default="0.0" /> -->
+    
+  <!-- <group ns="$(arg veh)$(arg num)s"> -->
+
+    <!-- Start sim -->
+    <!-- <node name="snap_sim" pkg="snap_sim" type="snap_sim" output="screen">
+        <rosparam file="$(find snap_sim)/param/$(arg veh).yaml" command="load"/>
+        <param name="imu_dt" value="0.002"/>
+        <param name="mocap_dt" value="0.01"/>
+        <param name="mocap_tf_parent_frame" value="world" />
+        <param name="mocap_tf_broadcast" value="true" />
+        <param name="viz_mesh" value="true" />
+        <param name="mesh_uri" value="package://snap_sim/meshes/hexarotor.dae" />
+        <param name="mesh_scale" value="0.75" />
+        <param name="autoarm" value="true" />
+        
+        <param name="init/x" value="$(arg x)"/>
+        <param name="init/y" value="$(arg y)"/>
+        <param name="init/z" value="$(arg z)"/>
+
+        <param name="init/q_x" value="$(arg q_x)"/>
+        <param name="init/q_y" value="$(arg q_y)"/>
+        <param name="init/q_z" value="$(arg q_z)"/>
+        <param name="init/q_w" value="$(arg q_w)"/> -->
+
+        <!-- wind params -->
+        <!-- <param name="wx_nominal" value="$(arg wx_nominal)"/>
+        <param name="wy_nominal" value="$(arg wy_nominal)"/>
+        <param name="wz_nominal" value="$(arg wz_nominal)"/>
+        <param name="wx_gust_bound" value="$(arg wx_gust_bound)"/>
+        <param name="wy_gust_bound" value="$(arg wy_gust_bound)"/>
+        <param name="wz_gust_bound" value="$(arg wz_gust_bound)"/>
+    </node> -->
+
+  <!-- </group> -->
+
+  <!-- Position / trajectory tracking -->
+  <!-- <include file="$(find outer_loop)/launch/cntrl.launch">
+    <arg name="veh" value="$(arg veh)" />
+    <arg name="num" value="$(arg num)s" />
+  </include> -->
+  <include file="$(find outer_loop_python)/launch/cntrl.launch">
+    <arg name="veh" value="$(arg veh)" />
+    <arg name="num" value="$(arg num)" />
+  </include>
+  <!--include file="$(find mav_compressed_mpc)/launch/compressed_mpc.launch"/-->
+
+  <!--include file="$(find mav_compressed_mpc)/launch/visualization.launch"/-->
+
+  <!-- snap stack autopilot -->
+  <!-- <include file="$(find snap)/launch/snap.launch">
+    <arg name="veh" value="$(arg veh)" />
+    <arg name="num" value="$(arg num)s" />
+  </include> -->
+
+  <!-- Room bounds for simulated highbay -->
+  <rosparam ns="room_bounds" if="$(eval arg('room') == 'vicon')">
+    x_min: -4.25
+    x_max:  4.5
+    y_min: -3.5
+    y_max:  4.25
+    z_min:  0.0
+    z_max:  2.0
+  </rosparam>
+
+  <group if="$(arg rviz)" ns="$(arg veh)$(arg num)">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find snap_sim)/rviz/default.rviz" />
+  </group>
+
+  <group if="$(arg key)">
+    <include file="$(find acl_joy)/launch/key.launch">
+      <arg name="veh" value="$(arg veh)" />
+      <arg name="num" value="$(arg num)" />
+    </include>
+  </group>
+
+  <group if="$(arg behavior_gui)">
+    <include file="$(find behavior_selector)/launch/gui.launch">
+    </include>
+  </group>
+  
+
+  <!-- <include file="$(find trajectory_generator)/launch/onboard.launch">
+    <arg name="veh" value="$(arg veh)" />
+    <arg name="num" value="$(arg num)s" />
+  </include> -->
+  <include file="$(find trajectory_generator_python)/launch/onboard.launch">
+    <arg name="veh" value="$(arg veh)" />
+    <arg name="num" value="$(arg num)" />
+  </include>
+
+</launch>

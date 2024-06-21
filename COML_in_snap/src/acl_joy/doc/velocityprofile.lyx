@@ -1,0 +1,909 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 1cm
+\headsep 1cm
+\footskip 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Overlaying a Velocity Profile
+\end_layout
+
+\begin_layout Author
+Parker Lusk
+\end_layout
+
+\begin_layout Date
+5 Sept 2020
+\end_layout
+
+\begin_layout Standard
+Given a path, we would like to turn it into a trajectory that satisfies
+ kinematic constraints in velocity, acceleration, and jerk.
+ The approach here follows 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Dinius18"
+literal "false"
+
+\end_inset
+
+ and creates up to 7 segments for an S-curve 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lewin"
+literal "false"
+
+\end_inset
+
+ profile, as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:motionprofile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ This formulation assumes that kinematic constraints 
+\begin_inset Formula $v_{\text{max}}^{\text{user}}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{\text{max}}$
+\end_inset
+
+, and 
+\begin_inset Formula $j_{\text{max}}$
+\end_inset
+
+ are symmetric, i.e., 
+\begin_inset Formula $*_{\text{min}}=-*_{\text{max}}$
+\end_inset
+
+.
+ Further, we assume that the robots starts at 
+\begin_inset Formula $v=v_{0}\leq v_{\text{max}}^{\text{user}}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=a_{0}\leq a_{\text{max}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename motionprofile-trim.pdf
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The 7 segments of the produced velocity profile.
+ In the case that the path is short enough, or 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+ is large enough, the fourth segment (cruise at 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+) is omitted.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:motionprofile"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Kinematic Segments
+\end_layout
+
+\begin_layout Standard
+Here we derive the kinematics of each segment.
+ Note that the value of 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+ is distinct from 
+\begin_inset Formula $v_{\text{max}}^{\text{user}}$
+\end_inset
+
+ provided by the user and must be assigned a value before the kinematic
+ segments are calculated.
+ The calculation of 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+ is left for Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:calc-vmax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Maximum Jerk
+\end_layout
+
+\begin_layout Standard
+The amount of time needed to reach 
+\begin_inset Formula $a_{\textmd{max}}$
+\end_inset
+
+ from 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{1}=\frac{a_{\text{max}}-a_{0}}{j_{\text{max}}}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The path length traversed during this segment and the final velocity at
+ the end of this segment are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{1}=v_{0}\Delta t_{1}+\frac{1}{2}a_{0}\Delta t_{1}^{2}+\frac{1}{6}j_{\text{max}}\Delta t_{1}^{3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v_{1}=v_{0}+a_{0}\Delta t_{1}+\frac{1}{2}j_{\text{max}}\Delta t_{1}^{2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Maximum Acceleration
+\end_layout
+
+\begin_layout Standard
+The robot continues at maximum acceleration until it needs to begin slowing
+ down to hit 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+, which depends on the parameters of segment 3 (specifically 
+\begin_inset Formula $j_{\text{min}}$
+\end_inset
+
+).
+ We can calculate the velocity at the end of segment 2 by subtracting the
+ velocity change during segment 3 from the maximum attainable velocity,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v_{2}=v_{\text{max}}-\Delta v_{3}.
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Then, the amount of time spent in section 2 and the path length traversed
+ are given as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{2}=\frac{v_{2}-v_{1}}{a_{\text{max}}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{2}=v_{1}\Delta t_{2}+\frac{1}{2}a_{\textmd{max}}\Delta t_{2}^{2}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Minimum Jerk, part 1
+\end_layout
+
+\begin_layout Standard
+During this segment, minimum jerk is applied to null out the acceleration,
+ leading up to 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+ and a potential cruise segment.
+ The amount of time needed to null out the acceleration from 
+\begin_inset Formula $a_{\text{max}}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{3}=\frac{0-a_{\text{max}}}{j_{\text{min}}}.
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+We then calculate the velocity change during this segment by considering
+ this segment in reverse: what would the 
+\begin_inset Quotes eld
+\end_inset
+
+final
+\begin_inset Quotes erd
+\end_inset
+
+ velocity be 
+\begin_inset Quotes eld
+\end_inset
+
+starting
+\begin_inset Quotes erd
+\end_inset
+
+ from 
+\begin_inset Formula $v=v_{\textmd{max}}$
+\end_inset
+
+, 
+\begin_inset Formula $a=0$
+\end_inset
+
+ and applying 
+\begin_inset Formula $j_{\textmd{min}}$
+\end_inset
+
+ for 
+\begin_inset Formula $t_{3}$
+\end_inset
+
+ seconds? Notice that this value is related to 
+\begin_inset Formula $v_{2}$
+\end_inset
+
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\Delta v_{3} & =-\frac{1}{2}j_{\textmd{min}}\Delta t_{3}^{2}\\
+ & =v_{3,\text{f}}-v_{3,\text{i}}=v_{\textmd{max}}-v_{2}.
+\end{aligned}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The path length traversed is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{3}=v_{2}\Delta t_{3}+\frac{1}{2}a_{\max}\Delta t_{3}^{2}+\frac{1}{6}j_{\text{min}}\Delta t_{3}^{3}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Cruise
+\end_layout
+
+\begin_layout Standard
+If there is a cruise segment, its parameters can be easily found using the
+ sum of each other segment's path length.
+ Since it is a constant velocity segment, it is simple to calculate the
+ time spent in this segment.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{4}=s_{\text{total}}-\sum_{i\ne4}\Delta s_{i}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{4}=\frac{\Delta s_{4}}{v_{\text{max}}}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Determining if there is a cruise segment is as simple as checking if 
+\begin_inset Formula $\sum_{i\ne4}\Delta s_{i}<s_{\text{total}}$
+\end_inset
+
+.
+ If there is no cruise section, these values are set to zero.
+\end_layout
+
+\begin_layout Subsection
+Minimum Jerk, part 2
+\end_layout
+
+\begin_layout Standard
+Here, regardless of there being a cruise section or not, the robot applies
+ minimum jerk until maximum decelaration is achieved.
+ The amount of time needed for this (from 
+\begin_inset Formula $a=0$
+\end_inset
+
+) is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{5}=\frac{a_{\text{min}}-0}{j_{\text{min}}}.
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The path length traversed and final velocity are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{5}=v_{\text{max}}\Delta t_{5}+\frac{1}{6}j_{\text{min}}t_{5}^{3},
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v_{5}=v_{\text{max}}+\frac{1}{2}j_{\text{min}}\Delta t_{5}^{2}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Minimum Acceleration
+\end_layout
+
+\begin_layout Standard
+The robot continues to decelerate at 
+\begin_inset Formula $a_{\text{min}}$
+\end_inset
+
+ until it needs to apply maximum jerk to hit the terminal constraint of
+ zero velocity and acceleration (similar to segment 2).
+ The velocity at the end of this segment is calculated by subtracting the
+ change in velocity during sectsegment 7 from the terminal velocity
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v_{6}=0-\Delta v_{7}.
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Then, the amount of time spent in segment 6 and the path length traversed
+ are given as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{6}=\frac{v_{6}-v_{5}}{a_{\text{min}}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{6}=v_{5}\Delta t_{6}+\frac{1}{2}a_{\textmd{min}}\Delta t_{6}^{2}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Maximum Jerk
+\end_layout
+
+\begin_layout Standard
+To come to rest, a final maximum jerk command is required.
+ The amount of time required to null out the acceleration from 
+\begin_inset Formula $a_{\text{min}}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta t_{7}=\frac{0-a_{\text{min}}}{j_{\text{max}}}.
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Similarly to segment 3, we consider this segment in reverse to calculate
+ the change in velocity over this segment, which is related to 
+\begin_inset Formula $v_{6}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\Delta v_{7} & =-\frac{1}{2}j_{\text{max}}\Delta t_{7}^{2}\\
+ & =v_{7,\text{f}}-v_{7,\text{i}}=0-v_{6}.
+\end{align}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The path length traversed is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta s_{7}=v_{6}\Delta t_{7}+\frac{1}{2}a_{\text{min}}\Delta t_{7}^{2}+\frac{1}{6}j_{\text{max}}\Delta t_{7}^{3}.
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Calculating Maximum Velocity 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:calc-vmax"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In implementation, before all of the kinematic segments are created, we
+ must first ascertain if there is a cruise segment.
+ The existence of a cruise segment depends on the maximum allowable velocity.
+ We first consider what the maximum 
+\emph on
+attainable
+\emph default
+ velocity would be under the acceleration and jerk constraints.
+ In this case, note that the time-optimal jerk control would be some sort
+ of bang-bang control and there would be no cruise period.
+ Thus, to determine what this maximum attainable velocity 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+ is, we sum up the remaining segment lengths (excluding 
+\begin_inset Formula $\Delta s_{4}$
+\end_inset
+
+) and determine what 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+ must be for the summed segment length to be equal to the input segment
+ length, 
+\begin_inset Formula $s_{\text{total}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+First, we express each 
+\begin_inset Formula $\Delta s_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $1<i<7$
+\end_inset
+
+ in terms of known quantities and the unknown maximum attainable velocity,
+ 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+.
+ To simplify notation, we recall that constraints are symmetric, allowing
+ us to express everything in terms of maximum limits.
+ Further, we drop the 
+\begin_inset Formula $\cdot_{\text{max}}$
+\end_inset
+
+ subscript for 
+\begin_inset Formula $a_{\text{max}}$
+\end_inset
+
+ and 
+\begin_inset Formula $j_{\text{max}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\Delta s_{2} & =v_{1}\Delta t_{2}+\frac{1}{2}a_{\textmd{max}}\Delta t_{2}^{2}\\
+ & =v_{1}\left(\frac{v_{\text{max}}-\frac{a^{2}}{2j}-v_{1}}{a}\right)+\frac{1}{2}a\left(\frac{v_{\text{max}}-\frac{a^{2}}{2j}-v_{1}}{a}\right)^{2}\\
+ & =\frac{v_{1}}{a}v_{\text{max}}+\frac{v_{1}}{a}\left(-\frac{a^{2}}{2j}-v_{1}\right)+\frac{1}{2a}\left(v_{\text{max}}-\frac{a^{2}}{2j}-v_{1}\right)^{2}\\
+ & =\frac{v_{1}}{a}v_{\text{max}}+\frac{v_{1}}{a}\left(-\frac{a^{2}}{2j}-v_{1}\right)+\frac{1}{2a}\left(v_{\text{max}}^{2}-\frac{a^{2}}{2j}v_{\text{max}}-v_{1}v_{\text{max}}-\frac{a^{2}}{2j}v_{\text{max}}+\frac{a^{4}}{4j^{2}}+\frac{a^{2}}{2j}v_{1}-v_{1}v_{\text{max}}+\frac{a^{2}}{2j}v_{1}+v_{1}^{2}\right)\\
+ & =\frac{v_{1}}{a}v_{\text{max}}+\frac{1}{2a}v_{\text{max}}^{2}-\frac{a}{4j}v_{\text{max}}-\frac{v_{1}}{2a}v_{\text{max}}-\frac{a}{4j}v_{\text{max}}-\frac{v_{1}}{2a}v_{\text{max}}+\frac{1}{2a}\left(\frac{a^{4}}{4j^{2}}+\frac{a^{2}}{2j}v_{1}+\frac{a^{2}}{2j}v_{1}+v_{1}^{2}\right)+\frac{v_{1}}{a}\left(-\frac{a^{2}}{2j}-v_{1}\right)\\
+ & =\frac{1}{2a}v_{\text{max}}^{2}-\frac{a}{2j}v_{\text{max}}+\frac{1}{2a}\left(\frac{a^{4}}{4j^{2}}+\frac{a^{2}}{2j}v_{1}+\frac{a^{2}}{2j}v_{1}+v_{1}^{2}\right)+\frac{v_{1}}{a}\left(-\frac{a^{2}}{2j}-v_{1}\right)\\
+ & =\frac{1}{2a}v_{\text{max}}^{2}-\frac{a}{2j}v_{\text{max}}+\frac{a^{3}}{8j^{2}}-\frac{v_{1}^{2}}{2a}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\Delta s_{3} & =v_{2}\left(\frac{a}{j}\right)+\frac{1}{2}a\left(\frac{a}{j}\right)^{2}+\frac{1}{6}j_{\text{min}}\left(\frac{a}{j}\right)^{3}\\
+ & =\left(v_{\text{max}}-\frac{a^{2}}{2j}\right)\left(\frac{a}{j}\right)+\frac{1}{2}a\left(\frac{a}{j}\right)^{2}-\frac{1}{6}j\left(\frac{a}{j}\right)^{3}\\
+ & =\frac{a}{j}v_{\text{max}}-\frac{a^{3}}{6j^{2}}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\Delta s_{5} & =v_{\text{max}}\Delta t_{5}+\frac{1}{6}j_{\text{min}}t_{5}^{3}\\
+ & =v_{\text{max}}\left(\frac{a}{j}\right)-\frac{1}{6}j\left(\frac{a}{j}\right)^{3}\\
+ & =\frac{a}{j}v_{\text{max}}-\frac{a^{3}}{6j^{2}}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\Delta s_{6} & =v_{5}\Delta t_{6}+\frac{1}{2}a_{\textmd{min}}\Delta t_{6}^{2}\\
+ & =\frac{1}{a}\left[\frac{1}{2}v_{\text{max}}^{2}-v_{\text{max}}\frac{a^{2}}{2j}\right]\\
+ & =\frac{1}{2a}v_{\max}^{2}-\frac{a}{2j}v_{\text{max}}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The sum of these segments (which all depend on 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+) is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\Delta s_{2}+\Delta s_{3}+\Delta s_{5}+\Delta s_{6} & =\frac{1}{2a}v_{\text{max}}^{2}-\frac{a}{2j}v_{\text{max}}+\frac{a^{3}}{8j^{2}}-\frac{v_{1}^{2}}{2a}+\frac{a}{j}v_{\text{max}}-\frac{a^{3}}{6j^{2}}+\frac{a}{j}v_{\text{max}}-\frac{a^{3}}{6j^{2}}+\frac{1}{2a}v_{\max}^{2}-\frac{a}{2j}v_{\text{max}}\\
+ & =\frac{1}{a}v_{\text{max}}^{2}+\left(\frac{a}{j}\right)v_{\text{max}}+\frac{a^{3}}{8j^{2}}-\frac{v_{1}^{2}}{2a}-\frac{a^{3}}{3j^{2}}\\
+ & =\frac{1}{a}v_{\text{max}}^{2}+\left(\frac{a}{j}\right)v_{\text{max}}+\left(-\frac{5a^{3}}{24j^{2}}-\frac{v_{1}^{2}}{2a}\right).
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, taking the difference between the known path length and calculated
+ path length with unknown 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align}
+s_{\text{total}}-\left(\Delta s_{1}+\Delta s_{2}+\Delta s_{3}+\Delta s_{5}+\Delta s_{6}+\Delta s_{7}\right) & =0\\
+s_{\text{total}}-\Delta s_{1}-\left(\Delta s_{2}+\Delta s_{3}+\Delta s_{5}+\Delta s_{6}\right)-\Delta s_{7} & =0\\
+0 & =\Delta s_{1}+\Delta s_{7}-s_{\text{total}}+\left(\Delta s_{2}+\Delta s_{3}+\Delta s_{5}+\Delta s_{6}\right)\\
+0 & =\Delta s_{1}+\Delta s_{7}-s_{\text{total}}+\frac{1}{a}v_{\text{max}}^{2}+\left(\frac{a}{j}\right)v_{\text{max}}+\left(-\frac{5a^{3}}{24j^{2}}-\frac{v_{1}^{2}}{2a}\right)\\
+ & =\frac{1}{a}v_{\text{max}}^{2}+\left(\frac{a}{j}\right)v_{\text{max}}+\left(\Delta s_{1}+\Delta s_{7}-s_{\text{total}}-\frac{5a^{3}}{24j^{2}}-\frac{v_{1}^{2}}{2a}\right),
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is quadratic in 
+\begin_inset Formula $v_{\text{max}}$
+\end_inset
+
+.
+ Note that this differs from the quadratic equation used in the implementation
+ of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Dinius18"
+literal "false"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+0 & =\frac{1}{a}v_{\text{max}}^{2}+\left(\frac{3}{2}\frac{a}{j}+\frac{v_{1}}{a}-\frac{\frac{a^{2}}{j}-v_{1}}{a}\right)v_{\text{max}}+\left(\Delta s_{1}+\Delta s_{7}-s_{\text{total}}-\frac{7}{3}\frac{a^{3}}{j^{2}}-v_{1}\left(\frac{a}{j}+\frac{v_{1}}{a}\right)+\frac{1}{2a}\left(\frac{a^{2}}{j}+\frac{v_{1}}{a}\right)^{2}\right)\\
+ & =\frac{1}{a}v_{\text{max}}^{2}+\left(\frac{1}{2}\frac{a}{j}\right)v_{\text{max}}+\left(\Delta s_{1}+\Delta s_{7}-s_{\text{total}}-\frac{7}{3}\frac{a^{3}}{j^{2}}-\frac{av_{1}}{j}-\frac{v_{1}^{2}}{a}+\frac{a^{3}}{2j^{2}}+\frac{v_{1}}{j}+\frac{v_{1}^{2}}{2a^{3}}\right).
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $v_{\text{max}}>v_{\text{max}}^{\text{user}}$
+\end_inset
+
+, then we limit 
+\begin_inset Formula $v_{\text{max}}:=v_{\text{max}}^{\text{user}}$
+\end_inset
+
+ and there will be a cruise section.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Dinius18"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+target "https://jwdinius.github.io/blog/2018/eta3traj"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Lewin"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.pmdcorp.com/resources/type/articles/get/mathematics-of-motion-control-profiles-article"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

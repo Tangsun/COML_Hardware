@@ -1,0 +1,5 @@
+- git: {local-name: acl_joy, uri: 'git@gitlab.com:mit-acl/fsw/demos/acl_joy.git'}
+- git: {local-name: snap, uri: 'git@gitlab.com:mit-acl/fsw/snap-stack/snap.git'}
+- git: {local-name: snap_sim, uri: 'git@gitlab.com:mit-acl/fsw/snap-stack/snap_sim.git'}
+- git: {local-name: snapstack_msgs, uri: 'git@gitlab.com:mit-acl/fsw/snap-stack/snapstack_msgs.git'}
+- git: {local-name: outer_loop, uri: 'git@gitlab.com:mit-acl/fsw/snap-stack/outer_loop.git'}

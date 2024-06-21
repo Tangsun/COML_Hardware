@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <node pkg="acl_joy" type="joy.py" name="joy" output="screen">
+    <param name="takeoff_smooth_vel" value="false" />
+    <param name="takeoff_vel" value="0.35" />
+    <param name="takeoff_alt" value="1.0" />
+    <param name="takeoff_rel" value="true" />
+    <param name="landing_fast_threshold" value="0.4" />
+    <param name="landing_fast_dec" value="0.0035" />
+    <param name="landing_slow_dec" value="0.001" />
+    <param name="max_accel_xy" value="2.0" />
+    <param name="max_accel_z" value="0.8" />
+
+    <!-- joy scaling -->
+    <param name="kx" value="2.0" />
+    <param name="ky" value="2.0" />
+    <param name="kz" value="0.5" />
+    <param name="kr" value="2.0" />
+  </node>
+
+</launch>

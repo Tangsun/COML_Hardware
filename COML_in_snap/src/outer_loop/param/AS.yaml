@@ -1,0 +1,34 @@
+# Flags
+screenPrint: true      # Screen print pertinent data to console
+# joyAttitude: false     # Use joystick to create attitude and thrust commands
+spinup_time: 0.5     # Takeoff spinup time.
+
+# Quadrotor parameters
+mass: 1.0             # Mass of quadrotor in AirSim
+
+# Safety params
+pose_timeout: 1.0      # External pose timeout (s) before killing motors
+alt_limit: 400.0         # Alititude limit (m) before killing motors
+
+# Control parameters
+# Gains
+Kp_xy: 6.0
+Ki_xy: 4.5
+Kd_xy: 4.5
+Kp_z: 7.0
+Ki_z: 0.5
+Kd_z: 5.0
+
+# Max allowable errors
+maxPosErr/xy: 2.0
+maxPosErr/z: 1.0
+maxVelErr/xy: 3.0
+maxVelErr/z: 3.0
+
+minRmagint: 3.0
+minRmag: 0.1
+
+# 2200mAh 4s 
+f2cmd/a: 0.0
+f2cmd/b: 0.08
+f2cmd/c: 0.0

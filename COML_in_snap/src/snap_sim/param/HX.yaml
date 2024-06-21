@@ -1,0 +1,54 @@
+# Physical and inertial properties of flying vehicle (i.e., with battery)
+mass: 1.300
+Jx: 0.0082  # Experimentally ID
+Jy: 0.0082  # Experimentally ID
+Jz: 0.0126  # Experimentally ID
+linvel_drag_lin: 0.1
+linvel_drag_quad: 0.01
+angvel_drag: 0.0001
+ground_effect: 0 #[-55.3516, 181.8265, -203.9874, 85.3735, -7.6619]
+
+# Propulsion properties (esc + motor + propeller)
+# Default: [7.6923, 0.0]
+# 1st order (linear): [8.1327840815, 0.0]
+# 2nd-order: [4.8732, 4.3795, 0.0]  # From https://wikis.mit.edu/confluence/display/acl/RCbenchmark+Thrust+Stand
+# 4th-order: [1.5997150688, -10.7005411799, 17.0333768654, 0.929134192, 0.0] # From https://wikis.mit.edu/confluence/display/acl/RCbenchmark+Thrust+Stand
+#inverse_thrust_curve: [1.5997150688, -10.7005411799, 17.0333768654, 0.929134192, 0.0]   # From https://wikis.mit.edu/confluence/display/acl/RCbenchmark+Thrust+Stand
+inverse_thrust_curve_ccw:  [7.1428, 0.0]
+inverse_thrust_curve_cw: [5.5555, 0.0]
+torque_curve_ccw: [0.135532, 0.0]  #[0.2, 0.0]
+torque_curve_cw:  [0.104094, 0.0]  #[0.2, 0.0]                   # From https://wikis.mit.edu/confluence/display/acl/RCbenchmark+Thrust+Stand
+tau_spin_up: 0.01
+tau_spin_down: 0.05
+min_thrust: 0.0 # Newtons, per motor
+max_thrust: 12.95 # Newtons, per motor
+min_torque: 0.0 # Nm, per motor
+max_torque: 1.2 # Nm, per motor
+
+# center of mass w.r.t body frame origin (i.e., geometric center)
+com: [0.0, 0.0, 0.0] #[-0.0055, 0.0065, 0.05]
+
+# motor geometry w.r.t body frame origin (i.e., geometric center)
+# (x y z; x y z; ...)
+motor_positions: [ 0.143,  0.082, 0.000,
+                   0.000,  0.165, 0.000,
+                  -0.143,  0.082, 0.000,
+                  -0.143, -0.083, 0.000,
+                  -0.000, -0.165, 0.000,
+                   0.143, -0.083, 0.000 ]
+motor_directions: [ 0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0]
+motor_spin: [-1, 1, -1, 1, -1, 1]
+
+# Sensor noise parameters (e.g., https://arxiv.org/pdf/1704.06053.pdf, Sec 3.4)
+gyro:
+  stdev: 0.025
+  bias_walk_stdev: 0.00001
+
+accel:
+  stdev: 0.20
+  bias_walk_stdev: 0.000001

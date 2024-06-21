@@ -1,0 +1,23 @@
+spinup:
+  time: 0.5        # time spent idling motors before takeoff
+  thrust_gs: 0.7   # normalized thrust [g's] for idling (< 1)
+
+# Quadrotor parameters
+mass: 0.5             # Mass of quadrotor in Kg with 2650mAh 4S and laser (160g)
+safety:
+  alt_limit: 4.0  # Alititude limit [m] before killing motors
+
+# Control parameters
+# Gains
+Kp_xy: 15.0
+Ki_xy: 5.5
+Kd_xy: 7.0
+Kp_z: 12.0
+Ki_z: 3.5
+Kd_z: 9.0
+
+# Max allowable errors
+maxPosErr/xy: 2.0
+maxPosErr/z: 1.0
+maxVelErr/xy: 3.0
+maxVelErr/z: 3.0

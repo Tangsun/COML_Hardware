@@ -1,0 +1,25 @@
+# Parameters for ACL small HX builds
+spinup:
+  time: 0.5        # time spent idling motors before takeoff
+  thrust_gs: 0.7   # normalized thrust [g's] for idling (< 1)
+
+# Vehicle parameters
+mass: 1.3             # AUW of vehicle [kg]
+
+safety:
+  alt_limit: 4.0  # Alititude limit [m] before killing motors
+
+# Control parameters
+# Gains
+Kp_xy: 2.0
+Ki_xy: 0.0 #5.5
+Kd_xy: 3.0
+Kp_z: 2.0
+Ki_z: 0.0 #3.5
+Kd_z: 3.0
+
+# Max allowable errors
+maxPosErr/xy: 1.0
+maxPosErr/z: 1.5
+maxVelErr/xy: 3.0
+maxVelErr/z: 3.0

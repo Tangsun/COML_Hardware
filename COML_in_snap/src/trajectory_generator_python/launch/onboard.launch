@@ -1,0 +1,13 @@
+<launch>
+  <arg name="veh" default="$(optenv VEHTYPE SQ)" />
+  <arg name="num" default="$(optenv VEHNUM 01)" />
+
+  <group ns="$(arg veh)$(arg num)">
+    <!-- Position / trajectory tracking -->
+    <node pkg="trajectory_generator_python" type="trajectory_generator_python.py" name="trajectory_generator_python" output="screen" clear_params="true">
+      <rosparam command="load" file="$(find trajectory_generator_python)/config/default.yaml"/>
+    </node>
+
+  </group>
+
+</launch>

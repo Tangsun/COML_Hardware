@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<node name="mess_with_vicon" pkg="comm_monitor" type="mess_with_vicon.py" output="screen">
+		<!-- Set parameters -->
+		<param name="~mode" value="publish_1_of_x" type="string"/>
+		<!--<param name="~mode" value="delay_for_y" type="string"/>-->
+		<param name="~x" value="1000" type="int"/>
+		<param name="~y" value="1" type="int"/>
+	</node>
+	<!-- 	
+	Publishes
+		outgoing_pose : vicon message (either y seconds after receiving, or 1 of x that wasnt dropped)
+	Subscribes
+		incoming_pose : straight from vicon filter on sikorsky
+	-->
+</launch>

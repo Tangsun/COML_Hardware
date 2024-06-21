@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="veh" default="SQ" />
+  <arg name="num" default="01" />
+
+  <group ns="$(arg veh)$(arg num)">
+    <include file="$(find acl_joy)/launch/acljoy.launch" />
+
+    <node pkg="acl_joy" type="vimfly.py" name="vimfly">
+      <param name="vx_cmd" value="0.5" />
+      <param name="vy_cmd" value="0.5" />
+      <param name="vz_cmd" value="0.5" />
+      <param name="psidot_cmd" value="1.5708" />
+    </node>
+  </group>
+</launch>

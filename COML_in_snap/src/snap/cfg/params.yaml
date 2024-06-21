@@ -1,0 +1,26 @@
+# Filter params
+theta:      0.95     # Position gh filter constant 
+kAtt:       0.005    # Attitude filter constant
+kGyroBias:  0.0004   # Gyro bias constant
+kAccelBias: 0.2      # Accel bias constant
+controlDT:  0.002    # Attitude controller rate (should match imu rate specified in imu_app) 
+
+# LPF cut-off frequencies [Hz]. Especially for gyro, do not go below ~50 Hz.
+# Ideally these numbers should be >= 90 Hz.
+fc/acc_xy: 120
+fc/acc_z:  120
+fc/gyr:    53
+
+# Adaptive notch filtering
+# Uses an FFT to find the peak noise in gyros (largely from motors)
+# and then places notch filters there to remove. This is in contrast
+# to a solution which sets the LPF cutoff freq very low, thereby
+# increasing latency.
+# See https://github.com/plusk01/adaptive-gyro-filtering
+anotch:
+  enable: false
+  nfft: 128                     # FFT length. n.b., delay / resolution tradeoff
+  dual_notch_width_percent: 2   # 0 is a single notch
+  Q: 360                        # quality factor. Higher --> tighter bandwidth
+  min_hz: 60                    # lower bound of peak detection
+  max_hz: 200                   # upper bound of peak detection

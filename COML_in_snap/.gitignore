@@ -1,0 +1,12 @@
+logs/
+build/
+devel/
+
+**/.catkin_tools/
+**/.vscode/
+
+**.log
+**.pyc
+*.db
+
+outer_loop_python/rosbags/

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<node pkg="comm_monitor" type="vicon_switch_node.py" name="vicon_switch_node" output="screen"/>	
+	<!-- Publications -->
+	<!-- ~vicon_out:
+		~goal_out -->
+	<!-- Subscriptions -->
+	<!-- ~vicon_in: 
+		~goal_in -->
+</launch>

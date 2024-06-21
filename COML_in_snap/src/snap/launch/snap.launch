@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="veh" default="$(optenv VEHTYPE SQ)" />
+  <arg name="num" default="$(optenv VEHNUM 01)" />
+
+  <!-- "true" if using sfpro board (excelsior8096) -->
+  <arg name="sfpro" default="$(optenv SFPRO false)" />
+
+  <!-- external pose source (i.e., 'world' for mocap) -->
+  <arg name="extpose" default="world" />
+
+  <node ns="$(arg veh)$(arg num)" name="snap" pkg="snap" type="snap" output="screen" clear_params="true">
+    <rosparam file="$(find snap)/cfg/params.yaml" command="load"/>
+    <rosparam file="$(find snap)/cfg/$(arg veh).yaml" command="load"/>
+    <param name="sfpro" value="$(arg sfpro)" />
+
+    <!-- should snap stack broadcast tf of veh w.r.t vicon -->
+    <param name="broadcast_tf" value="false" />
+
+    <remap from="~pose" to="$(arg extpose)"/>
+    <remap from="~attcmd" to="attcmd"/>
+
+    <remap from="~imu" to="imu"/>
+    <remap from="~state" to="state"/>
+    <remap from="~odometry" to="odometry"/>
+    <remap from="~motors" to="motors"/>
+    <remap from="~smc" to="smc"/>
+
+    <remap from="~battery/voltage" to="battery/voltage"/>
+    <remap from="~battery/current" to="battery/current"/>
+  </node>
+
+</launch>

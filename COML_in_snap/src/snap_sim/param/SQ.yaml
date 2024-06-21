@@ -1,0 +1,45 @@
+# Physical and inertial properties of flying vehicle (i.e., with battery)
+mass: 0.5
+Jx: 0.01
+Jy: 0.01
+Jz: 0.01
+linvel_drag_lin: 0.0
+linvel_drag_quad: 0.02
+angvel_drag: 0.0001
+ground_effect: 0 #[-55.3516, 181.8265, -203.9874, 85.3735, -7.6619]
+
+# Propulsion properties (esc + motor + propeller)
+inverse_thrust_curve_cw: [3.5, 0.0]  # Maps normalized PWM commands [-] (from 0 to 1) to thrust force [N] for clockwise spinning motors. Inverse relationship of "thrust_curve" in snap.
+inverse_thrust_curve_ccw: [3.5, 0.0] # Maps normalized PWM commands [-] (from 0 to 1) to thrust force [N] for counter-clockwise spinning motors. Inverse relationship of "thrust_curve" in snap.
+torque_curve_cw: [0.2, 0.0]
+torque_curve_ccw: [0.2, 0.0]
+tau_spin_up: 0.01
+tau_spin_down: 0.05
+min_thrust: 0.0 # Newtons, per motor
+max_thrust: 12.95 # Newtons, per motor
+min_torque: 0.0 # Nm, per motor
+max_torque: 1.2 # Nm, per motor
+
+# center of mass w.r.t body frame origin (i.e., geometric center)
+com: [0.0, 0.0, 0.0]
+
+# motor geometry w.r.t body frame origin (i.e., geometric center)
+# (x y z; x y z; ...)
+motor_positions: [ 0.08,  0.08, 0.0,
+                  -0.08,  0.08, 0.0,
+                  -0.08, -0.08, 0.0,
+                   0.08, -0.08, 0.0]
+motor_directions: [ 0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0,
+                    0.0, 0.0, 1.0]
+motor_spin: [-1, 1, -1, 1]
+
+# Sensor noise parameters (e.g., https://arxiv.org/pdf/1704.06053.pdf, Sec 3.4)
+gyro:
+  stdev: 0.025
+  bias_walk_stdev: 0.00001
+
+accel:
+  stdev: 0.20
+  bias_walk_stdev: 0.000001

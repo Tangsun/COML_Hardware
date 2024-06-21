@@ -1,0 +1,17 @@
+# sunbochen_old/train_results/diagnose*/*.pkl
+# sunbochen_old/train_results/pnorm_*/*.pkl
+# josh_old/train_results/hardware_*/*.pkl
+
+# # !train_results/hardware_15/*.pkl
+# # !train_results/hardware_16/*.pkl
+
+# For Aden's use in Summer 2024: cleaning up the repository, no binary file
+
+data/
+josh_old/
+sunbochen_old/
+train_results/
+test_results/
+*.log
+__pycache__/
+.ipynb_checkpoints/
