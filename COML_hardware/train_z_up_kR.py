@@ -115,7 +115,7 @@ if __name__ == "__main__":
     # DATA PROCESSING ########################################################
     # Load raw data and arrange in samples of the form
     # `(t, x, u, t_next, x_next)` for each trajectory, where `x := (q,dq)`
-    with open('data/2024-04-25_01-02-11_traj50_seed0.pkl', 'rb') as file:
+    with open('./data/2024-06-26_12-41-43_traj50_seed2.pkl', 'rb') as file:
         raw = pickle.load(file)
     num_dof = raw['q'].shape[-1]       # number of degrees of freedom
     param_dim = 2*num_dof + 9 + 3    # number of degrees of freedom including attitude (9 for rotation matrix, 3 for angular velocity)
