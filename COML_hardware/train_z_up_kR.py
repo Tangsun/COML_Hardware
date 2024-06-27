@@ -102,7 +102,7 @@ hparams = {
         'min_ref':           (-4.25, -3.5, 0.0),  #
         'max_ref':           (4.5, 4.25, 2.0),     #
         'p_freq':            args.p_freq,          # frequency for p-norm update
-        'regularizer_P':     args.reg_P,           # coefficient for P regularization
+        'regularizer_P':     args.reg_P,           # coefficient for P regularizraw[ation
         'regularizer_k_R':   args.reg_k_R,         # coefficient for k_R regularization
     },
 }
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     # DATA PROCESSING ########################################################
     # Load raw data and arrange in samples of the form
     # `(t, x, u, t_next, x_next)` for each trajectory, where `x := (q,dq)`
-    with open('./data/2024-06-26_12-41-43_traj50_seed2.pkl', 'rb') as file:
+    with open('./datasets/2024-06-26_12-41-43_traj50_seed2.pkl', 'rb') as file:
         raw = pickle.load(file)
     num_dof = raw['q'].shape[-1]       # number of degrees of freedom
     param_dim = 2*num_dof + 9 + 3    # number of degrees of freedom including attitude (9 for rotation matrix, 3 for angular velocity)
