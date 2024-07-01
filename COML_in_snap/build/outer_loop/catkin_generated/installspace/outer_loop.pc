@@ -1,8 +1,0 @@
-prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/install
-
-Name: outer_loop
-Description: Description of outer_loop
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib -louter_loop
-Requires: snapstack_msgs

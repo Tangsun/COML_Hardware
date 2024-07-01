@@ -1,3 +1,0 @@
-repository='https://github.com/plusk01/adaptive-gyro-filtering'
-module=''
-tag='origin'

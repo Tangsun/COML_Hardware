@@ -1,8 +1,0 @@
-prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop_python
-
-Name: outer_loop_python
-Description: Description of outer_loop_python
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

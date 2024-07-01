@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -O3 -DNDEBUG  -shared -Wl,-soname,libouter_loop.so -o /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/outer_loop/lib/libouter_loop.so CMakeFiles/outer_loop.dir/src/outer_loop.cpp.o 

@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name train_pnorm_single
 #SBATCH -o %j.log
+#SBATCH --exclusive
 
 # Initialize the module command first source
 source /etc/profile

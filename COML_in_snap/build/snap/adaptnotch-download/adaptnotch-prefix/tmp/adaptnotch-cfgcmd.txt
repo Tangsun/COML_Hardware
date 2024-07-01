@@ -1,1 +1,0 @@
-cmd='cmake;/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/src;-DCMAKE_BUILD_TYPE=Release;-DBUILD_EXAPPS=OFF;-DCMAKE_INSTALL_PREFIX=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap'

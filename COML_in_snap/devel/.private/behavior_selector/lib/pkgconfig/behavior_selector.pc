@@ -1,8 +1,0 @@
-prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/behavior_selector
-
-Name: behavior_selector
-Description: Description of behavior_selector
-Version: 0.0.0
-Cflags: -I/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/behavior_selector/include
-Libs: -L${prefix}/lib 
-Requires: 

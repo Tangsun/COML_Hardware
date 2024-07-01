@@ -1,1 +1,0 @@
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/catkin_tools_prebuild/lib/pkgconfig/catkin_tools_prebuild.pc

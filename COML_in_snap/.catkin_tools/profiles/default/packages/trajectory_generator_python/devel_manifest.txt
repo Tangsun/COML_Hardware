@@ -1,6 +1,0 @@
-trajectory_generator_python
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/trajectory_generator_python/cmake.lock /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/./cmake.lock
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/trajectory_generator_python/share/trajectory_generator_python/cmake/trajectory_generator_pythonConfig-version.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/trajectory_generator_python/cmake/trajectory_generator_pythonConfig-version.cmake
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/trajectory_generator_python/share/trajectory_generator_python/cmake/trajectory_generator_pythonConfig.cmake /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/share/trajectory_generator_python/cmake/trajectory_generator_pythonConfig.cmake
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/trajectory_generator_python/lib/python3/dist-packages/trajectory_generator_python/__init__.py /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/python3/dist-packages/trajectory_generator_python/__init__.py
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/trajectory_generator_python/lib/pkgconfig/trajectory_generator_python.pc /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/lib/pkgconfig/trajectory_generator_python.pc

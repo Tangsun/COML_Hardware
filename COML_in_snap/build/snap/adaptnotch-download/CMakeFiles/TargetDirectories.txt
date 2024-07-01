@@ -1,3 +1,0 @@
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/CMakeFiles/rebuild_cache.dir
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/CMakeFiles/edit_cache.dir
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/build/snap/adaptnotch-download/CMakeFiles/adaptnotch.dir

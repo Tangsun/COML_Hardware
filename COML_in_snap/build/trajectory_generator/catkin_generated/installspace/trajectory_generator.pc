@@ -1,8 +1,0 @@
-prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/install
-
-Name: trajectory_generator
-Description: Description of trajectory_generator
-Version: 0.1.0
-Cflags: -I${prefix}/include -I/usr/include/eigen3
-Libs: -L${prefix}/lib 
-Requires: roscpp snapstack_msgs geometry_msgs

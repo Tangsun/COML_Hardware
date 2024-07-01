@@ -1,1 +1,0 @@
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap_sim/share/snap_sim/cmake/snap_simConfig.cmake

@@ -1,8 +1,0 @@
-prefix=/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/install
-
-Name: snapstack_msgs
-Description: Description of snapstack_msgs
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: message_runtime std_msgs geometry_msgs nav_msgs actionlib_msgs std_srvs

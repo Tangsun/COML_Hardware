@@ -1,8 +1,0 @@
-In file included from [01m[K/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src/snap_sim/src/shims/sensor-imu/sensor_imu.cpp:1[m[K:
-[01m[K/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src/snap_sim/src/shims/sensor-imu/sensor_imu.cpp:[m[K In function ‘[01m[Kchar* sensor_imu_attitude_api_get_version(sensor_handle*)[m[K’:
-[01m[K/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src/snap_sim/include/shims/sensor-imu/sensor_imu_api.h:16:45:[m[K [01;35m[Kwarning: [m[KISO C++ forbids converting a string constant to ‘[01m[Kchar*[m[K’ [[01;35m[K-Wwrite-strings[m[K]
-   16 | #define SENSOR_IMU_AND_ATTITUDE_API_VERSION [01;35m[K"sim-imu"[m[K
-      |                                             [01;35m[K^~~~~~~~~[m[K
-[01m[K/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src/snap_sim/src/shims/sensor-imu/sensor_imu.cpp:28:10:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KSENSOR_IMU_AND_ATTITUDE_API_VERSION[m[K’
-   28 |   return [01;36m[KSENSOR_IMU_AND_ATTITUDE_API_VERSION[m[K;
-      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K

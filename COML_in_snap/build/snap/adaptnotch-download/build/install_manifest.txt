@@ -1,6 +1,0 @@
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap/lib/libadaptnotch.so
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap/include/adaptnotch/adaptnotch.h
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap/lib/cmake/adaptnotch/adaptnotch-targets.cmake
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap/lib/cmake/adaptnotch/adaptnotch-targets-release.cmake
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap/lib/cmake/adaptnotch/adaptnotch-config.cmake
-/home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel/.private/snap/lib/cmake/adaptnotch/adaptnotch-config-version.cmake

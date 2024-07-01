@@ -5,3 +5,9 @@
 *.db
 
 src/outer_loop_python/rosbags/
+
+src/
+devel/
+build/
+logs/
+.catkin_tools/
