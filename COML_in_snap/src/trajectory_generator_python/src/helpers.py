@@ -76,7 +76,7 @@ def start_rosbag_recording(topic_name):
     rospack = rospkg.RosPack()
     package_path = rospack.get_path('outer_loop_python')
     # Define the command to start rosbag recording
-    command = ['rosbag', 'record', '-q', '-o', f'{package_path}/rosbags/real/', topic_name]
+    command = ['rosbag', 'record', '-q', '-o', f'{package_path}/rosbags/sim/', topic_name]
     # Start recording
     rosbag_proc = subprocess.Popen(command)
     print('Started rosbag recording!')

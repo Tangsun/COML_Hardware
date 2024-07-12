@@ -37,6 +37,21 @@ class WindSim():
             # Calculate the sine wave for each trajectory and each dimension
             self.winds = jnp.array([amplitudes[i, :] * jnp.sin(2 * jnp.pi / periods[i, :] * self.t[:, None] + phases[i, :])
                             for i in range(self.num_traj)])
+        elif self.wind_type == 'random':
+            # Sample wind velocities from the training distribution
+            self.w_min = 0.  # minimum wind velocity
+            self.w_max = 6.  # maximum wind velocity
+            self.a = 5.      # shape parameter `a` for beta distribution
+            self.b = 9.      # shape parameter `b` for beta distribution
+            self.key, subkey = jax.random.split(self.key, 2)
+            self.w = self.w_min + (self.w_max - self.w_min)*jax.random.beta(subkey, self.a, self.b, (self.num_traj,))
+
+            # Randomize wind direction
+            random_vectors = jax.random.normal(self.key, (self.num_traj, 3))
+            unit_vectors = random_vectors/jnp.linalg.norm(random_vectors, axis=1, keepdims=True)
+            self.w_nominal_vectors = self.w[:, jnp.newaxis]*unit_vectors
+
+            self.winds = jnp.repeat(self.w_nominal_vectors[:, jnp.newaxis, :], len(self.t), axis=1)
         elif type(self.wind_type) is int or float:
             self.winds = self.wind_type*jnp.ones((self.num_traj, len(self.t), 3))
         else:
@@ -77,5 +92,6 @@ class WindSim():
             for wind_t in self.winds[i]:
                 wind_i.append(self.create_wind(wind_t))
             all_winds.append(wind_i)
+            print(f"Generated wind for trajectory: {i+1}")
         
-        return all_winds
+        return all_winds, self.a, self.b, self.w_max, self.w_min

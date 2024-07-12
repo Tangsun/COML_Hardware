@@ -124,8 +124,9 @@ class Spline():
             for r_i, dr_i, ddr_i in zip(r[i], dr[i], ddr[i]):
                 goal_i.append(create_goal(r_i, dr_i, ddr_i))
             all_goals.append(goal_i)
+            print(f"Generated Trajectory {i+1}")
                 
-        return all_goals
+        return all_goals, self.t_knots, self.r_knots
 
 class Point():
     def __init__(self, points):
