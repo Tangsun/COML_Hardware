@@ -113,8 +113,8 @@ void Snapdragon::ImuManager::ImuThreadMain() {
       if( returned_sample_count > 0 ) {
         current_seqeunce_number = imu_buffer[0].sequence_number;
         if( prev_sequence_number != 0 && prev_sequence_number + 1 != current_seqeunce_number ) {
-          WARN_PRINT( "Missed IMU Samples: Expected:(%u) Got(%u) sample count: (%d)", 
-            (prev_sequence_number+1), current_seqeunce_number, returned_sample_count );
+          // WARN_PRINT( "Missed IMU Samples: Expected:(%u) Got(%u) sample count: (%d)", 
+          //   (prev_sequence_number+1), current_seqeunce_number, returned_sample_count );
         }
         prev_sequence_number = imu_buffer[returned_sample_count-1].sequence_number;
 

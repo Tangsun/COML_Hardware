@@ -6,7 +6,7 @@ spinup:
 mass: 0.5             # Mass of quadrotor in Kg with 2650mAh 4S and laser (160g)
 
 safety:
-  alt_limit: 4.0  # Alititude limit [m] before killing motors
+  alt_limit: 100.0  # Alititude limit [m] before killing motors
 
 # Control parameters
 # Gains

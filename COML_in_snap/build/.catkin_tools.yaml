@@ -1,6 +1,6 @@
-devel_space: /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/devel
+devel_space: /home/adenm/COML_Hardware/COML_in_snap/devel
 install: false
-install_space: /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/install
+install_space: /home/adenm/COML_Hardware/COML_in_snap/install
 profile: default
-source_space: /home/sunbochen/Desktop/COML_Hardware/COML_in_snap/src
-workspace: /home/sunbochen/Desktop/COML_Hardware/COML_in_snap
+source_space: /home/adenm/COML_Hardware/COML_in_snap/src
+workspace: /home/adenm/COML_Hardware/COML_in_snap

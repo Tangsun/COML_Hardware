@@ -3,6 +3,7 @@ from snapstack_msgs.msg import Goal
 import numpy as np
 import rospkg
 import subprocess
+import os
 
 def quat2yaw(q) -> float:
     yaw = math.atan2(2 * (q.w * q.z + q.x * q.y),
@@ -76,7 +77,20 @@ def start_rosbag_recording(topic_name):
     rospack = rospkg.RosPack()
     package_path = rospack.get_path('outer_loop_python')
     # Define the command to start rosbag recording
-    command = ['rosbag', 'record', '-q', '-o', f'{package_path}/rosbags/sim/', topic_name]
+
+    trial_name = os.getenv('PKL_TRIAL_NAME')
+    filename = os.getenv('PKL_FILENAME')
+    traj_type = os.getenv('TRAJ_TYPE')
+    max_wind = os.getenv('MAX_WIND')
+
+    # print(f"===============================\n\nFilename: {filename}\n\n===============================")
+
+    if filename:
+        command = ['rosbag', 'record', '-q', f'--output-name={package_path}/rosbags/sim/{trial_name}_{filename[:-4]}_{traj_type}_wind_{max_wind}.bag', topic_name]
+        # f'--output-prefix={package_path}/rosbags/sim/'
+    else:
+        filename = 'seed=0_M=50_E=2500_pinit=2.50_pfreq=25_regP=1.0000.pkl'
+        command = ['rosbag', 'record', '-q', '-o', f'{package_path}/rosbags/sim/', topic_name]
     # Start recording
     rosbag_proc = subprocess.Popen(command)
     print('Started rosbag recording!')

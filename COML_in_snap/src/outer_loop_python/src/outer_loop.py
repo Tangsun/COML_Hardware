@@ -3,6 +3,7 @@ import numpy as np
 import os
 import pickle
 import rospkg
+import os
 
 from dynamics import prior
 from structs import AttCmdClass, ControlLogClass, GoalClass
@@ -33,8 +34,21 @@ class OuterLoop:
             rospack = rospkg.RosPack()
             package_path = rospack.get_path('outer_loop_python')
 
-            trial_name = 'reg_P_1_reg_Kr_1e-3'
-            filename = 'seed=0_M=50_E=1000_pinit=2.00_pfreq=2000_regP=1.0000.pkl'
+            trial_name = os.getenv('PKL_TRIAL_NAME')
+            filename = os.getenv('PKL_FILENAME')
+
+            if not trial_name or not filename:
+                trial_name = 'reg_P_1_reg_k_R_0.001_k_R_scale_1_k_R_z_1.26_z_training'
+                filename = 'seed=0_M=50_E=2500_pinit=2.50_pfreq=25_regP=1.0000.pkl'
+
+            # trial_name = 'reg_P_100_reg_k_R_0.001_k_R_scale_1_k_R_z_1.26_z_training'
+            # filename = 'seed=0_M=50_E=2500_pinit=2.00_pfreq=2500_regP=100.0000.pkl'
+
+            # trial_name = 'seed=0_M=50_E=1000_regP=1.0000'
+            # filename =   'seed=0_M=50_E=1000_pinit=2.50_pfreq=25_regP=1.0000.pkl'
+
+            # trial_name = 'reg_P_1_reg_Kr_1e-3'
+            # filename = 'seed=0_M=50_E=1000_pinit=2.00_pfreq=2000_regP=1.0000.pkl'
 
             # trial_name = 'reg_P_2e-3_reg_k_R_2e-3_k_R_z_1'
             # filename = 'seed=0_M=50_E=1000_pinit=2.00_pfreq=2000_regP=0.0020.pkl'

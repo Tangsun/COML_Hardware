@@ -1,6 +1,7 @@
 from snapstack_msgs.msg import Wind
 import jax
 import jax.numpy as jnp
+import os
 
 class WindSim():
     def __init__(self, key, num_traj, T, dt, wind_type):
@@ -41,6 +42,8 @@ class WindSim():
             # Sample wind velocities from the training distribution
             self.w_min = 0.  # minimum wind velocity
             self.w_max = 6.  # maximum wind velocity
+            if os.getenv('MAX_WIND') != '':
+                self.w_max = int(os.getenv('MAX_WIND'))
             self.a = 5.      # shape parameter `a` for beta distribution
             self.b = 9.      # shape parameter `b` for beta distribution
             self.key, subkey = jax.random.split(self.key, 2)

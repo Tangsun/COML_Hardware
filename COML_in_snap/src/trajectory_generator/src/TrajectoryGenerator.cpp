@@ -220,7 +220,7 @@ void TrajectoryGenerator::modeCB(const snapstack_msgs::QuadFlightMode& msg){
         double delta_yaw = traj_goals_[0].psi - quat2yaw(pose_.orientation);
         delta_yaw = wrap(delta_yaw);
         if(dist_to_init > dist_thresh_ or fabs(delta_yaw) > yaw_thresh_){
-            ROS_INFO("Can't switch to the generated trajectory following mode, too far from the init pos");
+            // ROS_INFO("Can't switch to the generated trajectory following mode, too far from the init pos");
             return;
         }
         pub_index_ = 0;

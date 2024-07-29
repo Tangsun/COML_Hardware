@@ -11,7 +11,7 @@ from threading import Event
 
 class OuterLoopROS:
     def __init__(self):
-        self.controller = 'pid' # pid or coml
+        self.controller = 'coml' # pid or coml
 
         self.control_dt_ = 0.0
         self.Tspinup_ = 0.0

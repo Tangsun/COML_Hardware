@@ -155,7 +155,7 @@ int32_t Snapdragon::ObserverManager::Imu_IEventListener_ProcessSamples( sensor_i
     static constexpr float imu_sample_dt_reasonable_threshold_ms = 12.5;
     if (delta > imu_sample_dt_reasonable_threshold_ms)
     {
-      WARN_PRINT("IMU sample dt > %f ms -- %f ms", imu_sample_dt_reasonable_threshold_ms, delta);
+      // WARN_PRINT("IMU sample dt > %f ms -- %f ms", imu_sample_dt_reasonable_threshold_ms, delta);
     }
     last_timestamp = current_timestamp_ns;
 
@@ -192,8 +192,8 @@ int32_t Snapdragon::ObserverManager::Imu_IEventListener_ProcessSamples( sensor_i
       num_dropped_samples = imu_samples[ii].sequence_number - sequence_number_last - 1;
       if (num_dropped_samples > 0)
       {
-        WARN_PRINT("Current IMU sample = %u, last IMU sample = %u", imu_samples[ii].sequence_number,
-                   sequence_number_last);
+        // WARN_PRINT("Current IMU sample = %u, last IMU sample = %u", imu_samples[ii].sequence_number,
+        //            sequence_number_last);
       }
     }
     sequence_number_last = imu_samples[ii].sequence_number;

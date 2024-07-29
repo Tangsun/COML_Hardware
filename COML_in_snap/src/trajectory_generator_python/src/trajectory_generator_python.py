@@ -12,6 +12,8 @@ from geometry_msgs.msg import Pose, Twist, Vector3
 from snapstack_msgs.msg import State, Goal, QuadFlightMode, Wind, AttitudeCommand
 from structs import FlightMode
 from threading import Event
+import signal
+import subprocess
 
 from helpers import quat2yaw, saturate, simpleInterpolation, wrap, start_rosbag_recording, stop_rosbag_recording
 from trajectories import Circle, FigureEight, Point, Spline
@@ -20,10 +22,13 @@ from wind import WindSim
 class TrajectoryGenerator:
     def __init__(self):
         self.traj_type = 'spline' # 'spline', 'point', 'circle', 'figure_eight'
+        if os.getenv('TRAJ_TYPE') != '':
+            self.traj_type = os.getenv('TRAJ_TYPE')
         self.auto = True # automatically start and stop following trajectories?
         self.wind_type = 'random' # None, 'sine', 'random_constant', 'random_sine', int/float
-        self.num_traj = 1
-        self.rosbag = False
+        self.num_traj = 10
+        self.rosbag = True
+        self.pub_pkl = False
 
         self.T = 30
         self.seed = 2
@@ -59,6 +64,17 @@ class TrajectoryGenerator:
         self.init_pos_ = Goal()
         self.wind_ = Wind()
         self.att_cmd_ = AttitudeCommand()
+
+        current_time = datetime.datetime.now()
+        self.timestamp = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+
+        rospack = rospkg.RosPack()
+        package_path = rospack.get_path('trajectory_generator_python')
+
+        self.data_dir = package_path + f'/data/'
+
+        if not os.path.exists(self.data_dir):
+            os.makedirs(self.data_dir)
 
         self.record = False
 
@@ -297,12 +313,13 @@ class TrajectoryGenerator:
             self.pub_index_ += 1
             if self.pub_index_ == len(self.traj_goals_):
                 self.index += 1
+                # self.traj_goals_full_[self.index-1] = None
                 if self.index == len(self.traj_goals_full_):
                     if self.auto:
                         self.flight_mode_ = FlightMode.INIT_POS
                         self.reset_wind()
                         rospy.loginfo("All trajectories completed, going to initial position")
-                        self.publish_data()
+                        if self.pub_pkl: self.publish_data(self.index)
                         return
                     else:
                         self.reset_goal()
@@ -314,7 +331,7 @@ class TrajectoryGenerator:
                         self.pub_goal_.publish(self.goal_)
                         self.flight_mode_ = FlightMode.HOVERING
                         rospy.loginfo("All trajectories completed, switched to HOVERING mode")
-                        self.publish_data()
+                        if self.pub_pkl: self.publish_data(self.index)
                         return
                 self.traj_goals_ = self.traj_goals_full_[self.index]
                 self.reset_wind()
@@ -322,8 +339,9 @@ class TrajectoryGenerator:
                 # self.index_msgs_ = self.index_msgs_full_
                 self.flight_mode_ = FlightMode.INIT_POS_TRAJ
                 print(f"Trajectory {self.index} completed, going to the initial position of trajectory {self.index+1}...")
-                if (self.index + 1) % 5 == 0:
-                    self.publish_data()
+                # if (self.index + 1) % 5 == 0:
+                #     self.publish_data(self.index)
+                if self.pub_pkl: self.publish_data(self.index)
 
         # go to initial pos?
         elif self.flight_mode_ == FlightMode.INIT_POS:
@@ -339,6 +357,11 @@ class TrajectoryGenerator:
                 self.flight_mode_ = FlightMode.LANDING
                 if self.rosbag_proc:
                     stop_rosbag_recording(self.rosbag_proc)
+
+                process = subprocess.Popen(['pgrep', '-f', 'roslaunch'], stdout=subprocess.PIPE)
+                pid, _ = process.communicate()
+                pid = int(pid.strip())
+                os.kill(pid, signal.SIGINT)
                 print("Landing...")
 
         # If landing, decrease alt until we reach ground (and switch to ground)
@@ -353,6 +376,11 @@ class TrajectoryGenerator:
                 self.goal_.power = False
                 self.flight_mode_ = FlightMode.GROUND
                 print("Landed")
+
+                process = subprocess.Popen(['pgrep', '-f', 'roslaunch'], stdout=subprocess.PIPE)
+                pid, _ = process.communicate()
+                pid = int(pid.strip())
+                os.kill(pid, signal.SIGINT)
 
         # Apply safety bounds
         self.goal_.p.x = saturate(self.goal_.p.x, self.xmin_, self.xmax_)  # val, low, high
@@ -445,12 +473,12 @@ class TrajectoryGenerator:
             self.r[goal_index, traj_index] = np.array([self.goal_.p.x, self.goal_.p.y, self.goal_.p.z])
             self.dr[goal_index, traj_index] = np.array([self.goal_.v.x, self.goal_.v.y, self.goal_.v.z])
     
-    def publish_data(self):
+    def publish_data(self, index):
         print("Writing data...")
 
         self.t = jax.numpy.arange(0, self.T + self.dt_, self.dt_)  # same times for each trajectory
 
-        data = {
+        self.data = {
             'seed': self.seed, 'prng_key': self.key,
             't': self.t, 'q': self.q, 'dq': self.dq,
             'u': self.u,
@@ -466,10 +494,35 @@ class TrajectoryGenerator:
 
         rospack = rospkg.RosPack()
         package_path = rospack.get_path('trajectory_generator_python')
-        file_path = package_path + f'/data/{timestamp}_traj{self.num_traj}_seed{self.seed}.pkl'
 
-        with open(file_path, 'wb+') as file:
-            pickle.dump(data, file)
+        data_dir = package_path + f'/data/'
+
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+
+        pkl_filename = f'{self.timestamp}_traj_{index + 1}_seed_{self.seed}.pkl'
+        file_path = data_dir + pkl_filename
+        
+        try:
+            with open(file_path, 'wb+') as file:
+                pickle.dump(self.data, file)
+            print(f"Wrote file: {file_path}")
+        except:
+            return # dont want to delete other files if we arent replacing one
+
+        try:
+            for filename in os.listdir(self.data_dir):
+                if self.timestamp in filename and filename != pkl_filename:
+                    file_path = os.path.join(self.data_dir, filename)
+                    try:
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)  # Remove the file
+                            print(f"Deleted file: {file_path}")
+                    except Exception as e:
+                        print(f"Failed to delete {file_path}. Reason: {e}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
 
 def main():
     # Initialize the ROS node with the default name 'my_node_name' (will be overwritten by launch file)

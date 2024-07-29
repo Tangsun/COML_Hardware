@@ -7,7 +7,7 @@ spinup:
 mass: 1.2             # AUW of vehicle [kg]
 
 safety:
-  alt_limit: 4.0  # Alititude limit [m] before killing motors
+  alt_limit: 100.0  # Alititude limit [m] before killing motors
 
 # Control parameters
 # Gains

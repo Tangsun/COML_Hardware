@@ -744,5 +744,5 @@ if __name__ == "__main__":
         pickle.dump(results, file)
 
     end = time.time()
-    print("Meta-training completes with p-norm chosen as {:.2f}".format(results['pnorm']))
+    print("Meta-training completed with p-norm chosen as {:.2f}".format(results['pnorm']))
     print('done ({:.2f} s)! Best step index for meta params: {}'.format(end - start, best_idx_meta))
