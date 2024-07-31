@@ -78,18 +78,20 @@ def start_rosbag_recording(topic_name):
     package_path = rospack.get_path('outer_loop_python')
     # Define the command to start rosbag recording
 
-    trial_name = os.getenv('PKL_TRIAL_NAME')
-    filename = os.getenv('PKL_FILENAME')
-    traj_type = os.getenv('TRAJ_TYPE')
-    max_wind = os.getenv('MAX_WIND')
 
-    # print(f"===============================\n\nFilename: {filename}\n\n===============================")
+    # print(f"===============================\n\nFilename: {file_name}\n\n===============================")
 
-    if filename:
-        command = ['rosbag', 'record', '-q', f'--output-name={package_path}/rosbags/sim/{trial_name}_{filename[:-4]}_{traj_type}_wind_{max_wind}.bag', topic_name]
+    if os.getenv('PKL_FILENAME'):
+
+        file_name =  os.getenv('PKL_FILENAME')
+        trial_name = os.getenv('PKL_TRIAL_NAME')
+        traj_type =  os.getenv('TRAJ_TYPE')
+        max_wind =   os.getenv('MAX_WIND')
+        
+        command = ['rosbag', 'record', '-q', f'--output-name={package_path}/rosbags/sim/{trial_name}_{file_name[:-4]}_{traj_type}_wind_{max_wind}.bag', topic_name]
         # f'--output-prefix={package_path}/rosbags/sim/'
     else:
-        filename = 'seed=0_M=50_E=2500_pinit=2.50_pfreq=25_regP=1.0000.pkl'
+        file_name = 'seed=0_M=50_E=2500_pinit=2.50_pfreq=25_regP=1.0000.pkl'
         command = ['rosbag', 'record', '-q', '-o', f'{package_path}/rosbags/sim/', topic_name]
     # Start recording
     rosbag_proc = subprocess.Popen(command)

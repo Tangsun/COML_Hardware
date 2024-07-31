@@ -42,7 +42,7 @@ class WindSim():
             # Sample wind velocities from the training distribution
             self.w_min = 0.  # minimum wind velocity
             self.w_max = 6.  # maximum wind velocity
-            if os.getenv('MAX_WIND') != '':
+            if os.getenv('MAX_WIND'):
                 self.w_max = int(os.getenv('MAX_WIND'))
             self.a = 5.      # shape parameter `a` for beta distribution
             self.b = 9.      # shape parameter `b` for beta distribution
@@ -56,6 +56,8 @@ class WindSim():
 
             self.winds = jnp.repeat(self.w_nominal_vectors[:, jnp.newaxis, :], len(self.t), axis=1)
         elif type(self.wind_type) is int or float:
+            if os.getenv('MAX_WIND'):
+                self.wind_type = int(os.getenv('MAX_WIND'))
             self.winds = self.wind_type*jnp.ones((self.num_traj, len(self.t), 3))
         else:
             # Sample wind velocities from the training distribution
@@ -97,4 +99,7 @@ class WindSim():
             all_winds.append(wind_i)
             print(f"Generated wind for trajectory: {i+1}")
         
-        return all_winds, self.a, self.b, self.w_max, self.w_min
+        if self.wind_type == 'random':
+            return all_winds, self.a, self.b, self.w_max, self.w_min
+        else:
+            return all_winds

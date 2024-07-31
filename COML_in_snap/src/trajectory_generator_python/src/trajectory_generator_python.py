@@ -22,12 +22,12 @@ from wind import WindSim
 class TrajectoryGenerator:
     def __init__(self):
         self.traj_type = 'spline' # 'spline', 'point', 'circle', 'figure_eight'
-        if os.getenv('TRAJ_TYPE') != '':
+        if os.getenv('TRAJ_TYPE'):
             self.traj_type = os.getenv('TRAJ_TYPE')
         self.auto = True # automatically start and stop following trajectories?
-        self.wind_type = 'random' # None, 'sine', 'random_constant', 'random_sine', int/float
-        self.num_traj = 10
-        self.rosbag = True
+        self.wind_type = 1 # None, 'sine', 'random_constant', 'random_sine', int/float
+        self.num_traj = 1
+        self.rosbag = False
         self.pub_pkl = False
 
         self.T = 30
@@ -433,8 +433,10 @@ class TrajectoryGenerator:
 
     def generate_wind(self): 
         wind_sim = WindSim(self.key, self.num_traj, self.T, self.dt_, self.wind_type)
-        all_winds, self.a, self.b, self.w_max, self.w_min = wind_sim.generate_all_winds()
-        # all_winds = wind_sim.generate_all_winds()
+        if self.wind_type == 'random':
+            all_winds, self.a, self.b, self.w_max, self.w_min = wind_sim.generate_all_winds()
+        else:
+            all_winds = wind_sim.generate_all_winds()
         
         return all_winds
 

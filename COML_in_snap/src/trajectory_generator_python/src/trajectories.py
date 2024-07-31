@@ -160,7 +160,7 @@ class Circle():
         self.center_y = center_y
         self.alt = alt
 
-        self.num_traj = 1
+        self.num_traj = 5
 
         self.r, self.dr, self.ddr = self.populate_circle_trajectory()
     
@@ -202,6 +202,7 @@ class Circle():
             for r_i, dr_i, ddr_i in zip(self.r[i], self.dr[i], self.ddr[i]):
                 goal_i.append(create_goal(r_i, dr_i, ddr_i))
             all_goals.append(goal_i)
+            print(f"Generated trajectory {i+1}")
         return all_goals
 
 class FigureEight():
@@ -226,7 +227,7 @@ class FigureEight():
         self.center_y = center_y
         self.alt = alt
 
-        self.num_traj = 1
+        self.num_traj = 5
 
         self.r, self.dr, self.ddr = self.populate_figure_eight_trajectory()
     
@@ -268,4 +269,5 @@ class FigureEight():
             for r_i, dr_i, ddr_i in zip(self.r[i], self.dr[i], self.ddr[i]):
                 goal_i.append(create_goal(r_i, dr_i, ddr_i))
             all_goals.append(goal_i)
+            print(f"Generated trajectory {i+1}")
         return all_goals

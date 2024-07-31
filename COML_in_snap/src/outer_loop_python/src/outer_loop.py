@@ -38,8 +38,8 @@ class OuterLoop:
             filename = os.getenv('PKL_FILENAME')
 
             if not trial_name or not filename:
-                trial_name = 'reg_P_1_reg_k_R_0.001_k_R_scale_1_k_R_z_1.26_z_training'
-                filename = 'seed=0_M=50_E=2500_pinit=2.50_pfreq=25_regP=1.0000.pkl'
+                trial_name = 'reg_P_0.005_reg_k_R_0.001_k_R_scale_1_k_R_z_1.2_z_training'
+                filename = 'seed=0_M=50_E=3500_pinit=3.00_pfreq=25_regP=0.0050.pkl'
 
             # trial_name = 'reg_P_100_reg_k_R_0.001_k_R_scale_1_k_R_z_1.26_z_training'
             # filename = 'seed=0_M=50_E=2500_pinit=2.00_pfreq=2500_regP=100.0000.pkl'
